@@ -1,0 +1,17 @@
+domain: mlflow
+language: tensorflow
+project_slug: sc-autoencoder
+project_slug_no_hyphen: sc_autoencoder
+template_version: '1.0.1 # <<MLF-CORE_NO_BUMP>>'
+template_handle: mlflow-tensorflow
+github_username: kevinmenden
+creator_github_username: kevinmenden
+is_github_repo: true
+is_repo_private: true
+is_github_orga: false
+full_name: Kevin Menden
+email: kevin.menden@t-online.de
+project_name: sc-autoencoder
+project_short_description: Autoencoder for single-cell data
+version: 0.1.0
+license: MIT
