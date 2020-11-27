@@ -8,7 +8,7 @@ name: sc-autoencoder
 
 # conda_env: environment.yml
 docker_env:
-  image: ghcr.io/kevinmenden/sc_autoencoder:0.1.0
+  image: sc_autoencoder
   volumes: ["${PWD}/data:/data"]
 
 entry_points:
