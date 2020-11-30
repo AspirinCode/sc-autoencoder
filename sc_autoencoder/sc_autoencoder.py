@@ -39,8 +39,7 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
         click.echo(click.style(f'Number of devices: {strategy.num_replicas_in_sync}', fg='blue'))
 
         # Fetch and prepare dataset
-        #train_dataset, eval_dataset = load_train_test_data(strategy, batch_size, buffer_size, tensorflow_seed)
-        dataset = load_data(strategy, batch_size, buffer_size, tensorflow_seed)
+        dataset, test_data = load_data(strategy, batch_size, buffer_size, tensorflow_seed)
 
         # Get the input dimension
         # TODO: find a nicer, less ugly way of doing this
@@ -56,12 +55,11 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
                           metrics=['mse'])
 
             model.build(input_shape=(batch_size, input_dim))
-            #print(model.summary())
             # Train and evaluate the trained model
             runtime = time.time()
             train(model, epochs, dataset)
-            #eval_loss, eval_acc = test(model, eval_dataset)
-            #click.echo(f'Test loss: {eval_loss}, Test Accuracy: {eval_acc}')
+            embedding = test(model, test_data, save_path="embedding.png")
+            mlflow.log_artifact(embedding)
 
             device = 'GPU' if cuda else 'CPU'
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))

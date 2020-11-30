@@ -18,7 +18,7 @@ def preprocessing(adata):
     sc.pp.scale(adata, zero_center=True, max_value=3)
     x = adata.X
     data = tf.data.Dataset.from_tensor_slices((x, x))
-    return data
+    return data, x
 
 
 def load_data(strategy, batch_size, buffer_size, tensorflow_seed):
@@ -29,7 +29,7 @@ def load_data(strategy, batch_size, buffer_size, tensorflow_seed):
     adata.var_names_make_unique()
 
     # preprocessing
-    dataset = preprocessing(adata)
+    dataset, test_data = preprocessing(adata)
 
     # Distribute data to devices and scale images
     BATCH_SIZE_PER_REPLICA = batch_size
@@ -37,4 +37,4 @@ def load_data(strategy, batch_size, buffer_size, tensorflow_seed):
 
     dataset = dataset.cache().shuffle(buffer_size, seed=tensorflow_seed, reshuffle_each_iteration=False).batch(BATCH_SIZE)
 
-    return dataset
+    return dataset, test_data
