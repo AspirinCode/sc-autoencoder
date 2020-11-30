@@ -8,7 +8,7 @@ import time
 from rich import traceback
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
-from data_loading.data_loader import load_train_test_data, load_data
+from data_loading.data_loader import load_data
 from model.model import create_model
 from training.train import train, test
 
@@ -50,12 +50,12 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
 
         with strategy.scope():
             # Define model and compile model
-            model = create_model(input_shape=(input_dim,))
+            model = create_model(input_shape=input_dim)
             model.compile(loss=tf.keras.losses.MeanSquaredError(),
                           optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
                           metrics=['mse'])
 
-            model.build(input_shape=(input_dim,))
+            model.build(input_shape=(batch_size, input_dim))
             #print(model.summary())
             # Train and evaluate the trained model
             runtime = time.time()

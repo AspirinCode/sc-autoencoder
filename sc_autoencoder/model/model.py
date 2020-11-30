@@ -11,8 +11,7 @@ class Autoencoder(tf.keras.Model):
 
         # Encoder
         self.encoder = tf.keras.Sequential([
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(self.layer_sizes[0],  activation="relu", name="encoder1", input_shape=input_dim),
+            tf.keras.layers.Dense(self.layer_sizes[0],  activation="relu", name="encoder1"),
             tf.keras.layers.Dense(self.layer_sizes[1],  activation="relu", name="encoder2"),
             tf.keras.layers.Dense(self.layer_sizes[2],  activation="relu", name="encoder3"),
             tf.keras.layers.Dense(self.latent_size,     activation="relu", name="latent")
@@ -23,7 +22,7 @@ class Autoencoder(tf.keras.Model):
             tf.keras.layers.Dense(self.layer_sizes[2],  activation="relu", name="decoder1"),
             tf.keras.layers.Dense(self.layer_sizes[1],  activation="relu", name="decoder2"),
             tf.keras.layers.Dense(self.layer_sizes[0],  activation="relu", name="decoder3"),
-            tf.keras.layers.Dense(self.input_dim[0],     activation="linear", name="out_layer")
+            tf.keras.layers.Dense(self.input_dim,     activation="linear", name="out_layer")
         ])
 
     
